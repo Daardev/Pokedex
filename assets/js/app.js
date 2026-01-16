@@ -28,20 +28,20 @@ class Pokemon {
       const urls = this.ids.map(id => this.url + id + '/');//Creamos una constante donde almacenaremos las url con los ids, urls ahora contiene un array con las 9 urls
       const promesasFetch = urls.map(url => fetch(url));//por cada urls hacemos una peticion fetch y guardamos las promesas en un nuevo array promesasFetch = 9 promesas 1 por cada url
       const res = await Promise.all(promesasFetch);//con Promise.All resolvemos todas las promesas de una sola vez, cuando todas esten listas guardamos la respuesta en la constante res
-      console.log('Urls con su id dinamico: ', urls)
-      console.log('Guardamos las promesas de cada ulrs, ESTADO "PENDIENTES"', promesasFetch)
-      console.log('Obtenemos la respuesta de la promesa, ESTADO "RESUELTAS" ', res);
+      //console.log('Urls con su id dinamico: ', urls)
+      //console.log('Guardamos las promesas de cada ulrs, ESTADO "PENDIENTES"', promesasFetch)
+      //console.log('Obtenemos la respuesta de la promesa, ESTADO "RESUELTAS" ', res);
 
       for(const respuesta of res){
         if(!respuesta.ok){
           throw new Error(`Fetch fallido: ${respuesta.status}`);
         }
       }
-
+      console.warn('Carga exitosa de los datos')
       const promesasJSON = res.map(resp => resp.json()); //promesasJSON es un array de promesas a resolver, con map creamos un nuevo array que nos devuelve una promesa
       const datosPokemon = await Promise.all(promesasJSON);//resolvemos todas las promesas
-      console.log('Obtenemos un json(promesa): ', promesasJSON);
-      console.log('Resolvemos la promesa y obtenemos los datos en un array de objetos: ', datosPokemon);
+      //console.log('Obtenemos un json(promesa): ', promesasJSON);
+      //console.log('Resolvemos la promesa y obtenemos los datos en un array de objetos: ', datosPokemon);
 
       //this.pokemones es igual a un array vacio y ahora le asignamos un nuevo array de objetos con la información que necesitamos id, nombre, imagen y tipos
       this.pokemones = datosPokemon.map(pokemones =>{
@@ -55,7 +55,7 @@ class Pokemon {
       });
       
       this.pokemonesOriginales = [...this.pokemones];
-    console.log('creamos un nuevo array de los pokémones con la información que necesitamos y this.pokemonesOriginales se le asigna el mismo array: ', this.pokemones)
+      //console.log('creamos un nuevo array de los pokémones con la información que necesitamos y this.pokemonesOriginales se le asigna el mismo array: ', this.pokemones)
 
     }catch(err){//en caso de error asignamos el array vacio en caso de haber guardado algo
       console.log('error', err);
